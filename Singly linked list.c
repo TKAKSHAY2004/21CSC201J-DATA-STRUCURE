@@ -5,20 +5,19 @@ void create();
 void display();
 void insert_begin();
 void insert_end();
-void insert_pos();
+void insert_position();
 void delete_begin();
 void delete_end();
-void delete_pos();
+void delete_position();
 void search();
-void cnt();
+void count();
 
 struct node {
     int info;
     struct node *next;
 };
 
-int count;
-struct node *start = NULL;
+struct node *head = NULL;
 
 int main() {
     int choice;
@@ -46,24 +45,30 @@ int main() {
                 break;
             case 3:
                 insert_begin();
+                display();
                 break;
             case 4:
                 insert_end();
+                display();
                 break;
             case 5:
-                insert_pos();
+                insert_position();
+                display();
                 break;
             case 6:
                 delete_begin();
+                display();
                 break;
             case 7:
                 delete_end();
+                display();
                 break;
             case 8:
-                delete_pos();
+                delete_position();
+                display();
                 break;
             case 9:
-                cnt();
+                count();
                 break;
             case 10:
                 search();
@@ -86,10 +91,10 @@ void create() {
     printf("\nEnter the data value for the node: ");
     scanf("%d", &temp->info);
     temp->next = NULL;
-    if (start == NULL) {
-        start = temp;
+    if (head == NULL) {
+        head = temp;
     } else {
-        ptr = start;
+        ptr = head;
         while (ptr->next != NULL) {
             ptr = ptr->next;
         }
@@ -99,11 +104,11 @@ void create() {
 
 void display() {
     struct node *ptr;
-    if (start == NULL) {
+    if (head == NULL) {
         printf("\nList is empty! \n");
         return;
     } else {
-        ptr = start;
+        ptr = head;
         printf("\nThe List elements are:\n");
         while (ptr != NULL) {
             printf("%d ", ptr->info);
@@ -119,8 +124,8 @@ void insert_begin() {
     temp = (struct node *)malloc(sizeof(struct node));
     printf("\nEnter the data value for the node: ");
     scanf("%d", &temp->info);
-    temp->next = start;
-    start = temp;
+    temp->next = head;
+    head = temp;
 }
 
 void insert_end() {
@@ -128,14 +133,14 @@ void insert_end() {
     temp = (struct node *)malloc(sizeof(struct node));
     printf("\nEnter the data value for the node: ");
     scanf("%d", &temp->info);
-    ptr = start;
+    ptr = head;
     while (ptr->next != NULL) {
         ptr = ptr->next;
     }
     ptr->next = temp;
 }
 
-void insert_pos() {
+void insert_position() {
     struct node *ptr, *temp;
     int i, pos;
     temp = (struct node *)malloc(sizeof(struct node));
@@ -143,7 +148,7 @@ void insert_pos() {
     scanf("%d", &pos);
     printf("\nEnter the data value of the node: ");
     scanf("%d", &temp->info);
-    for (i = 0, ptr = start; i < pos - 1; i++) {
+    for (i = 0, ptr = head; i < pos - 1; i++) {
         ptr = ptr->next;
     }
     temp->next = ptr->next;
@@ -152,15 +157,15 @@ void insert_pos() {
 
 void delete_begin() {
     struct node *ptr;
-    ptr = start;
-    start = start->next;
+    ptr = head;
+    head = head->next;
     printf("\nThe deleted element is: %d \n", ptr->info);
     free(ptr);
 }
 
 void delete_end() {
     struct node *temp, *ptr;
-    ptr = start;
+    ptr = head;
     while (ptr->next != NULL) {
         temp = ptr;
         ptr = ptr->next;
@@ -170,12 +175,12 @@ void delete_end() {
     free(ptr);
 }
 
-void delete_pos() {
+void delete_position() {
     int i, pos;
     struct node *temp, *ptr;
     printf("\nEnter the position of the node to be deleted: ");
     scanf("%d", &pos);
-    ptr = start;
+    ptr = head;
     for (i = 0; i < pos; i++) {
         temp = ptr;
         ptr = ptr->next;
@@ -185,10 +190,10 @@ void delete_pos() {
     free(ptr);
 }
 
-void cnt() {
+void count() {
     int count = 0;
     struct node *ptr;
-    ptr = start;
+    ptr = head;
     while (ptr != NULL) {
         count++;
         ptr = ptr->next;
@@ -201,7 +206,7 @@ void search() {
     struct node *ptr;
     printf("\nEnter the data to be searched: ");
     scanf("%d", &val);
-    ptr = start;
+    ptr = head;
     while (ptr->info != val) {
         ptr = ptr->next;
         pos = pos + 1;
