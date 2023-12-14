@@ -209,7 +209,7 @@ void search() {
     ptr = head;
     while (ptr->info != val) {
         ptr = ptr->next;
-        pos = pos + 1;
+        pos++;
     }
     printf("\nThe position of the element is: %d \n", pos);
 }
